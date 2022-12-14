@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_buildwithdaffa/pages/screen/currentTransaction.dart';
+import 'package:flutter_buildwithdaffa/pages/screen/transactionHistory.dart';
 import 'package:flutter_buildwithdaffa/style/colors.dart';
 import 'package:flutter_buildwithdaffa/style/textStyle.dart';
 
@@ -62,28 +64,6 @@ class _notificationState extends State<notification>
             clipBehavior: Clip.antiAlias,
             children: [TransactionHistory(), CurrentTransaction()]),
       ),
-    );
-  }
-}
-
-class TransactionHistory extends StatelessWidget {
-  const TransactionHistory({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text('Transaction History'),
-    );
-  }
-}
-
-class CurrentTransaction extends StatelessWidget {
-  const CurrentTransaction({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text('Curret Transaction'),
     );
   }
 }
