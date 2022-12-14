@@ -163,7 +163,7 @@ class accountSettings extends StatelessWidget {
                     borderRadius: BorderRadius.circular(32)),
                 child: Expanded(
                     child: TextFormField(
-                  decoration: InputDecoration.collapsed(hintText: 'No Phone'),
+                  decoration: InputDecoration.collapsed(hintText: 'No Phone',),
                 )),
               )
             ],
