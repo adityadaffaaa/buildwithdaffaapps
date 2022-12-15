@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.daffa.flutter_buildwithdaffa">
    <application
-        android:label="flutter_buildwithdaffa"
+        android:label="Build With Daffa"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

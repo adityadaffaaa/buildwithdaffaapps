@@ -75,7 +75,7 @@ class introduction extends StatelessWidget {
               },
               child: CustomBtn(
                 bgcolor: secondary,
-                text: 'Next',
+                text: 'Get Started',
                 color: primary,
                 borderColor: secondary,
               ),

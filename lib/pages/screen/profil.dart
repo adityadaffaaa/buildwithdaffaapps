@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_buildwithdaffa/components/bodyProfile.dart';
 import 'package:flutter_buildwithdaffa/style/colors.dart';
@@ -165,7 +166,10 @@ class profilPage extends StatelessWidget {
       return Column(
         children: [
           InkWell(
-            onTap: (() => null),
+            onTap: () async {
+              await FirebaseAuth.instance.signOut();
+              Navigator.pushReplacementNamed(context, '/signIn');
+            },
             child: Container(
               width: 120,
               padding: EdgeInsets.symmetric(horizontal: 24, vertical: 10),

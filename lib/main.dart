@@ -10,7 +10,11 @@ import 'package:flutter_buildwithdaffa/pages/signIn.dart';
 import 'package:flutter_buildwithdaffa/pages/signUp.dart';
 import 'package:flutter_buildwithdaffa/pages/splash.dart';
 
-void main() => runApp(const Bwd());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(const Bwd());
+}
 
 class Bwd extends StatelessWidget {
   const Bwd({super.key});
@@ -20,8 +24,9 @@ class Bwd extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Build With Daffa Apps",
+      // initialRoute: '/',
       initialRoute:
-          FirebaseAuth.instance.currentUser == null ? '/signIn' : '/mainScreen',
+          FirebaseAuth.instance.currentUser == null ? '/' : '/mainScreen',
       routes: {
         '/': (context) => SplashPage(),
         '/introduction': (context) => introduction(),
