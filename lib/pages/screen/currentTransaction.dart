@@ -20,7 +20,7 @@ class CurrentTransaction extends StatelessWidget {
             Expanded(
                 child: TextFormField(
               decoration: InputDecoration.collapsed(
-                  hintText: 'Find transaction history',
+                  hintText: 'Find current transaction',
                   hintStyle: paragraph2.copyWith(color: text4)),
             )),
             Icon(

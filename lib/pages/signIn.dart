@@ -1,14 +1,23 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_buildwithdaffa/style/colors.dart';
 import 'package:flutter_buildwithdaffa/style/textStyle.dart';
 import '../components/button.dart';
 
-class SignInPage extends StatelessWidget {
+class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
 
   @override
+  State<SignInPage> createState() => _SignInPageState();
+}
+
+class _SignInPageState extends State<SignInPage> {
+  @override
   Widget build(BuildContext context) {
+    TextEditingController emailController = TextEditingController();
+    TextEditingController passwordController = TextEditingController();
+
     Widget body() {
       return Expanded(
         child: Container(
@@ -36,7 +45,7 @@ class SignInPage extends StatelessWidget {
                             child: TextFormField(
                           style: paragraph2.copyWith(color: primary),
                           decoration: InputDecoration.collapsed(
-                              hintText: "Username",
+                              hintText: "Email",
                               hintStyle: paragraph2.copyWith(color: primary)),
                         )),
                       ),
@@ -77,7 +86,24 @@ class SignInPage extends StatelessWidget {
                     height: 24,
                   ),
                   InkWell(
-                    onTap: () => Navigator.pushNamed(context, '/mainScreen'),
+                    onTap: () async {
+                      try {
+                        final messengerCT = ScaffoldMessenger.of(context);
+                        final navigatorCT = Navigator.of(context);
+                        await FirebaseAuth.instance
+                            .createUserWithEmailAndPassword(
+                                email: emailController.text,
+                                password: passwordController.text);
+                        messengerCT.showSnackBar(SnackBar(
+                          content: Text(
+                              'Selamat Datang ${FirebaseAuth.instance.currentUser!.email}'),
+                          duration: const Duration(seconds: 5),
+                        ));
+                        navigatorCT.pushReplacementNamed('/mainScreen');
+                      } on FirebaseAuthException catch (e) {
+                      
+                      }
+                    },
                     child: CustomBtn(
                       bgcolor: primary,
                       text: "Sign In",

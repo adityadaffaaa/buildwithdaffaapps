@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_buildwithdaffa/pages/accountSettings.dart';
 import 'package:flutter_buildwithdaffa/pages/getStarted.dart';
@@ -18,7 +20,8 @@ class Bwd extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Build With Daffa Apps",
-      initialRoute: '/',
+      initialRoute:
+          FirebaseAuth.instance.currentUser == null ? '/signIn' : '/mainScreen',
       routes: {
         '/': (context) => SplashPage(),
         '/introduction': (context) => introduction(),
