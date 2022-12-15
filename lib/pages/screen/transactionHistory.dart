@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_buildwithdaffa/components/cardTransactionHistory.dart';
+import 'package:flutter_buildwithdaffa/components/cardTransaction.dart';
 import 'package:flutter_buildwithdaffa/list/ListTransactionHistory.dart';
 import 'package:flutter_buildwithdaffa/style/colors.dart';
 import 'package:flutter_buildwithdaffa/style/textStyle.dart';

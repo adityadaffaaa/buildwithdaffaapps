@@ -2,21 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_buildwithdaffa/style/colors.dart';
 import 'package:flutter_buildwithdaffa/style/textStyle.dart';
 
-class cardTransactionHistory extends StatelessWidget {
-  const cardTransactionHistory(
+class cardTransaction extends StatelessWidget {
+  const cardTransaction(
       {super.key,
       required this.gambar,
       required this.judul,
       required this.status,
       required this.tanggal,
       required this.tag,
-      required this.totalHarga});
+      required this.totalHarga,
+      required this.bgStatus,
+      required this.textColor});
   final gambar;
   final status;
   final judul;
   final tanggal;
   final List<String> tag;
   final totalHarga;
+  final bgStatus;
+  final textColor;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -46,10 +50,10 @@ class cardTransactionHistory extends StatelessWidget {
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                 decoration: BoxDecoration(
-                    color: primary, borderRadius: BorderRadius.circular(32)),
+                    color: bgStatus, borderRadius: BorderRadius.circular(32)),
                 child: Text(
-                  'Paid Off',
-                  style: paragraph2.copyWith(color: text2),
+                  status,
+                  style: paragraph2.copyWith(color: textColor),
                 ),
               )
             ],
@@ -130,4 +134,3 @@ class cardTransactionHistory extends StatelessWidget {
     );
   }
 }
-
