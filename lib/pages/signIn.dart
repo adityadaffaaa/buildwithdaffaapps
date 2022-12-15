@@ -164,7 +164,7 @@ class _SignInPageState extends State<SignInPage> {
               style: paragraph2.copyWith(color: primary),
               children: [
                 TextSpan(
-                    text: 'Sign Up',
+                    text: ' Sign Up',
                     style: paragraph1,
                     recognizer: TapGestureRecognizer()..onTap)
               ]),
