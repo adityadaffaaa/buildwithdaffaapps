@@ -23,7 +23,7 @@ class getStartedPage extends StatelessWidget {
                 height: 30,
               ),
               Text(
-                'Lorem ipsum dolor sit amet consectetur. Adipiscing id turpis volutpat varius.',
+                '“Mulai pengalaman bersama aplikasi build with daffa untuk membawa kamu agar bisa menjadi master of technology”',
                 textAlign: TextAlign.center,
                 style: paragraph2.copyWith(color: text5),
               )

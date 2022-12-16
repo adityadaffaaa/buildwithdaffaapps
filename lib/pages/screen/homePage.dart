@@ -29,10 +29,14 @@ class HomePage extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Icon(
-                      Icons.account_circle_outlined,
-                      size: 42,
-                      color: primary,
+                    InkWell(
+                      onTap: () =>
+                          Navigator.pushNamed(context, '/accountSettings'),
+                      child: Icon(
+                        Icons.account_circle_outlined,
+                        size: 42,
+                        color: primary,
+                      ),
                     ),
                     SizedBox(
                       width: 6,

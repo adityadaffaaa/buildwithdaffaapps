@@ -55,7 +55,7 @@ class introduction extends StatelessWidget {
             Column(
               children: [
                 Text(
-                  'Lorem ipsum dolor sit amet consectetur. Adipiscing id turpis volutpat varius.',
+                  'Belajar Desain dan code dengan mudah bersama kami!',
                   style: paragraph1.copyWith(color: text2),
                   textAlign: TextAlign.center,
                 ),
@@ -63,7 +63,7 @@ class introduction extends StatelessWidget {
                   height: 12,
                 ),
                 Text(
-                  'Lorem ipsum dolor sit amet consectetur. Adipiscing id turpis volutpat varius. Adipiscing id turpis volutpat varius. dolor sit amet consectetur.',
+                  'Membantu kamu belajar design dan code sesuai pilihan belajar kamu',
                   textAlign: TextAlign.center,
                   style: paragraph4.copyWith(color: text4),
                 )

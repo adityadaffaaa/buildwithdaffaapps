@@ -10,14 +10,17 @@ class kontenCarousel {
 var KontenCarouselList = [
   kontenCarousel(
       gambar: 'assets/img/ContohKategori.png',
-      judul: 'Tes Bro',
-      deskripsi: 'Crepes adalah jajanan sejuta umat'),
+      judul: 'Freelance UI UX Designer',
+      deskripsi:
+          'Memperdalam visual design dari segi layout, pewarnaan, typography, interaction, dan juga masih banyak bidang lainnya'),
   kontenCarousel(
       gambar: 'assets/img/ContohKategori.png',
-      judul: 'Apa Hayooooo',
-      deskripsi: 'Beli lah nasi kotak agar kenyang'),
+      judul: 'Full Stack Javascript Developer',
+      deskripsi:
+          'Bekerja sama dengan tim desainer dalam mengimplementasikan hasil design projek ke bentuk template HTML menggunakan Framework yang popular'),
   kontenCarousel(
       gambar: 'assets/img/ContohKategori.png',
-      judul: 'Halo geesss',
-      deskripsi: 'Halo gais david disini dan ini adalah hape')
+      judul: 'Full Stack Mobile Developer',
+      deskripsi:
+          'Menguasai bahasa pemrograman Dart dan Flutter SDK dalam membangun aplikasi iOS/Android')
 ];
