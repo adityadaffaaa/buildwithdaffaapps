@@ -86,7 +86,7 @@ class courseCard extends StatelessWidget {
                                   itemBuilder: (context, index) {
                                     return Text(
                                       tag[index] + ', ',
-                                      style: paragraph2.copyWith(color: text5),
+                                      style: paragraph4.copyWith(color: text5),
                                       overflow: TextOverflow.clip,
                                     );
                                   },

@@ -45,7 +45,7 @@ class cardTransaction extends StatelessWidget {
             children: [
               Text(
                 tanggal,
-                style: paragraph2.copyWith(color: text5),
+                style: paragraph4.copyWith(color: text5),
               ),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
@@ -53,7 +53,7 @@ class cardTransaction extends StatelessWidget {
                     color: bgStatus, borderRadius: BorderRadius.circular(32)),
                 child: Text(
                   status,
-                  style: paragraph2.copyWith(color: textColor),
+                  style: paragraph4.copyWith(color: textColor),
                 ),
               )
             ],
@@ -96,14 +96,14 @@ class cardTransaction extends StatelessWidget {
                         ),
                         Container(
                           height: 20,
-                          width: 160,
+                          width: 150,
                           child: ListView.builder(
                             scrollDirection: Axis.horizontal,
                             itemCount: tag.length,
                             itemBuilder: (context, index) {
                               return Text(
                                 tag[index] + ', ',
-                                style: paragraph2.copyWith(color: text5),
+                                style: paragraph4.copyWith(color: text5),
                                 overflow: TextOverflow.ellipsis,
                                 textAlign: TextAlign.end,
                               );
@@ -116,11 +116,11 @@ class cardTransaction extends StatelessWidget {
                       children: [
                         Text(
                           'Total Price',
-                          style: paragraph2.copyWith(color: text5),
+                          style: paragraph4.copyWith(color: text5),
                         ),
                         Text(
                           'IDR ' + totalHarga,
-                          style: paragraph2.copyWith(color: primary),
+                          style: paragraph4.copyWith(color: primary),
                         )
                       ],
                     )

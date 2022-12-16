@@ -68,14 +68,14 @@ class CardKelasSaya extends StatelessWidget {
                     ),
                     Container(
                       height: 20,
-                      width: 130,
+                      width: 110,
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
                         itemCount: tag.length,
                         itemBuilder: (context, index) {
                           return Text(
                             tag[index] + ', ',
-                            style: paragraph2.copyWith(color: text5),
+                            style: paragraph4.copyWith(color: text5),
                             overflow: TextOverflow.ellipsis,
                             textAlign: TextAlign.end,
                           );
@@ -127,6 +127,3 @@ class CardKelasSaya extends StatelessWidget {
     );
   }
 }
-
-
-
