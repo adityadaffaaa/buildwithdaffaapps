@@ -38,12 +38,6 @@ class ListKategori extends StatefulWidget {
 }
 
 class _ListKategoriState extends State<ListKategori> {
-  var currentIndex = 0;
-  @override
-  void klik() {
-    setState(() {});
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(

@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_buildwithdaffa/components/carouselHomePage.dart';
 import 'package:flutter_buildwithdaffa/components/courseCard.dart';
@@ -11,9 +13,11 @@ import 'package:carousel_slider/carousel_slider.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
-
   @override
   Widget build(BuildContext context) {
+    FirebaseFirestore firestoreInst = FirebaseFirestore.instance;
+    CollectionReference user = firestoreInst.collection('user');
+    final auth = FirebaseAuth.instance.currentUser!.email;
     Widget top() {
       return Container(
         margin: EdgeInsets.all(24),
@@ -33,9 +37,20 @@ class HomePage extends StatelessWidget {
                     SizedBox(
                       width: 6,
                     ),
-                    Text(
-                      'Hallo, Aditya',
-                      style: paragraph1.copyWith(color: primary),
+                    StreamBuilder<DocumentSnapshot>(
+                      stream: user.doc(auth).snapshots(),
+                      builder: (BuildContext context, AsyncSnapshot snapshot) {
+                        if (snapshot.hasError) {
+                          return Text('Something went wrong');
+                        }
+                        if (!snapshot.hasData) {
+                          return Text('Loading...');
+                        }
+                        return Text(
+                          "Hallo, ${snapshot.data!['full name']}",
+                          style: paragraph1.copyWith(color: primary),
+                        );
+                      },
                     )
                   ],
                 ),

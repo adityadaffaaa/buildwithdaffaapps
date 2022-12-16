@@ -46,7 +46,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 'email': value.user?.email,
                 'full name': fullName.text,
                 'username': userName.text,
-                'no phone': noTelp.text,
+                'no phone': int.tryParse(noTelp.text),
                 'password': password.text
               }));
       messengerCT.showSnackBar(SnackBar(
@@ -64,6 +64,11 @@ class _SignUpPageState extends State<SignUpPage> {
       } else if (e.code == 'weak-password') {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text('Password Anda lemah!'),
+          duration: Duration(seconds: 5),
+        ));
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(e.code),
           duration: Duration(seconds: 5),
         ));
       }
@@ -136,6 +141,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           child: TextField(
                         controller: emailController,
                         style: paragraph2.copyWith(color: primary),
+                        keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration.collapsed(
                             hintText: "Email",
                             hintStyle: paragraph2.copyWith(color: primary)),
@@ -154,6 +160,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           child: TextField(
                         controller: noTelp,
                         style: paragraph2.copyWith(color: primary),
+                        keyboardType: TextInputType.phone,
                         decoration: InputDecoration.collapsed(
                             hintText: "No Phone",
                             hintStyle: paragraph2.copyWith(color: primary)),

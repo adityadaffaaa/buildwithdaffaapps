@@ -25,8 +25,7 @@ class Bwd extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: "Build With Daffa Apps",
       // initialRoute: '/',
-      initialRoute:
-          FirebaseAuth.instance.currentUser == null ? '/' : '/mainScreen',
+      initialRoute: '/',
       routes: {
         '/': (context) => SplashPage(),
         '/introduction': (context) => introduction(),

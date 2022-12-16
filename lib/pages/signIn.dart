@@ -90,6 +90,7 @@ class _SignInPageState extends State<SignInPage> {
                             child: TextFormField(
                           controller: emailController,
                           style: paragraph2.copyWith(color: primary),
+                          keyboardType: TextInputType.emailAddress,
                           decoration: InputDecoration.collapsed(
                               hintText: "Email",
                               hintStyle: paragraph2.copyWith(color: primary)),

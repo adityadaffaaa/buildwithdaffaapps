@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_buildwithdaffa/style/colors.dart';
 import 'package:flutter_buildwithdaffa/style/textStyle.dart';
@@ -13,8 +14,11 @@ class SplashPage extends StatefulWidget {
 class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
-    Timer(Duration(seconds: 3),
-        () => Navigator.pushNamed(context, '/introduction'));
+    Timer(Duration(seconds: 3), () {
+      FirebaseAuth.instance.currentUser == null
+          ? Navigator.pushNamed(context, '/introduction')
+          : Navigator.pushReplacementNamed(context, '/mainScreen');
+    });
     super.initState();
   }
 

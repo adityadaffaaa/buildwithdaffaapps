@@ -1,12 +1,28 @@
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_buildwithdaffa/database_services.dart';
 import 'package:flutter_buildwithdaffa/style/colors.dart';
 import 'package:flutter_buildwithdaffa/style/textStyle.dart';
+import 'package:image_picker/image_picker.dart';
 
-class accountSettings extends StatelessWidget {
+class accountSettings extends StatefulWidget {
   const accountSettings({super.key});
 
   @override
+  State<accountSettings> createState() => _accountSettingsState();
+}
+
+class _accountSettingsState extends State<accountSettings> {
+  var profilPicture;
+  bool _isObscured = false;
+  @override
   Widget build(BuildContext context) {
+    FirebaseFirestore firestoreInst = FirebaseFirestore.instance;
+    CollectionReference user = firestoreInst.collection('user');
+    final auth = FirebaseAuth.instance.currentUser!.email;
     Widget top() {
       return Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -30,20 +46,32 @@ class accountSettings extends StatelessWidget {
       return Column(
         children: [
           Stack(children: [
-            Container(
-              height: 130,
-              width: 130,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(100),
-                  image: DecorationImage(
-                      image: AssetImage('assets/img/foto.png'),
-                      fit: BoxFit.cover)),
-            ),
+            (profilPicture != null)
+                ? Container(
+                    height: 130,
+                    width: 130,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(100),
+                        image: DecorationImage(
+                            image: NetworkImage(profilPicture),
+                            fit: BoxFit.cover)),
+                  )
+                : Icon(
+                    Icons.account_circle_outlined,
+                    size: 130,
+                    color: primary,
+                  ),
             Positioned(
               right: 0,
               bottom: 0,
               child: InkWell(
-                onTap: (() => null),
+                onTap: () async {
+                  XFile? file = await getImage();
+                  profilPicture =
+                      await DatabaseServices.uploadImage(profilPicture);
+
+                  setState(() {});
+                },
                 child: Container(
                   padding: EdgeInsets.all(6),
                   decoration: BoxDecoration(
@@ -60,170 +88,203 @@ class accountSettings extends StatelessWidget {
           SizedBox(
             height: 14,
           ),
-          Text(
-            'Aditya Kusmara',
-            style: heading3.copyWith(color: text1),
-          ),
+          StreamBuilder<DocumentSnapshot>(
+            stream: user.doc(auth).snapshots(),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return Text('Loading...');
+              }
+              if (snapshot.hasError) {
+                return Text('Something went wrong');
+              }
+              return Text(
+                '${snapshot.data!['full name']}',
+                style: heading3.copyWith(color: text1),
+              );
+            },
+          )
         ],
       );
     }
 
     Widget body() {
-      return Column(
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+      return StreamBuilder<DocumentSnapshot>(
+        stream: user.doc(auth).snapshots(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return Text('Loading...');
+          }
+          if (snapshot.hasError) {
+            return Text('Something went wrong');
+          }
+          return Column(
             children: [
-              Text(
-                'Name',
-                style: paragraph1.copyWith(color: background2),
-              ),
-              SizedBox(
-                height: 4,
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 10),
-                decoration: BoxDecoration(
-                    border: Border.all(color: primary, width: 2),
-                    borderRadius: BorderRadius.circular(32)),
-                child: Expanded(
-                    child: TextFormField(
-                  decoration: InputDecoration.collapsed(hintText: 'Name'),
-                )),
-              )
-            ],
-          ),
-          SizedBox(
-            height: 12,
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Username',
-                style: paragraph1.copyWith(color: background2),
-              ),
-              SizedBox(
-                height: 4,
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 10),
-                decoration: BoxDecoration(
-                    border: Border.all(color: primary, width: 2),
-                    borderRadius: BorderRadius.circular(32)),
-                child: Expanded(
-                    child: TextFormField(
-                  decoration: InputDecoration.collapsed(hintText: 'Username'),
-                )),
-              )
-            ],
-          ),
-          SizedBox(
-            height: 12,
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Email',
-                style: paragraph1.copyWith(color: background2),
-              ),
-              SizedBox(
-                height: 4,
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 10),
-                decoration: BoxDecoration(
-                    border: Border.all(color: primary, width: 2),
-                    borderRadius: BorderRadius.circular(32)),
-                child: Expanded(
-                    child: TextFormField(
-                  decoration: InputDecoration.collapsed(hintText: 'Email'),
-                )),
-              )
-            ],
-          ),
-          SizedBox(
-            height: 12,
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'No Phone',
-                style: paragraph1.copyWith(color: background2),
-              ),
-              SizedBox(
-                height: 4,
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 10),
-                decoration: BoxDecoration(
-                    border: Border.all(color: primary, width: 2),
-                    borderRadius: BorderRadius.circular(32)),
-                child: Expanded(
-                    child: TextFormField(
-                  decoration: InputDecoration.collapsed(hintText: 'No Phone',),
-                )),
-              )
-            ],
-          ),
-          SizedBox(
-            height: 12,
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Password',
-                style: paragraph1.copyWith(color: background2),
-              ),
-              SizedBox(
-                height: 4,
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 10),
-                decoration: BoxDecoration(
-                    border: Border.all(color: primary, width: 2),
-                    borderRadius: BorderRadius.circular(32)),
-                child: Row(
-                  children: [
-                    Expanded(
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Name',
+                    style: paragraph1.copyWith(color: background2),
+                  ),
+                  SizedBox(
+                    height: 4,
+                  ),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 24, vertical: 10),
+                    decoration: BoxDecoration(
+                        border: Border.all(color: primary, width: 2),
+                        borderRadius: BorderRadius.circular(32)),
+                    child: Expanded(
                         child: TextFormField(
-                      obscureText: true,
-                      decoration:
-                          InputDecoration.collapsed(hintText: 'Password'),
+                      decoration: InputDecoration.collapsed(
+                          hintText: "${snapshot.data!['full name']}"),
                     )),
-                    InkWell(
-                      onTap: (() => null),
-                      child: Icon(
-                        Icons.remove_red_eye_outlined,
-                        color: primary,
+                  )
+                ],
+              ),
+              SizedBox(
+                height: 12,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Username',
+                    style: paragraph1.copyWith(color: background2),
+                  ),
+                  SizedBox(
+                    height: 4,
+                  ),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 24, vertical: 10),
+                    decoration: BoxDecoration(
+                        border: Border.all(color: primary, width: 2),
+                        borderRadius: BorderRadius.circular(32)),
+                    child: Expanded(
+                        child: TextFormField(
+                      decoration: InputDecoration.collapsed(
+                          hintText: "${snapshot.data!['username']}"),
+                    )),
+                  )
+                ],
+              ),
+              SizedBox(
+                height: 12,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Email',
+                    style: paragraph1.copyWith(color: background2),
+                  ),
+                  SizedBox(
+                    height: 4,
+                  ),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 24, vertical: 10),
+                    decoration: BoxDecoration(
+                        border: Border.all(color: primary, width: 2),
+                        borderRadius: BorderRadius.circular(32)),
+                    child: Expanded(
+                        child: TextFormField(
+                      decoration: InputDecoration.collapsed(
+                          hintText: "${snapshot.data!['email']}"),
+                    )),
+                  )
+                ],
+              ),
+              SizedBox(
+                height: 12,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'No Phone',
+                    style: paragraph1.copyWith(color: background2),
+                  ),
+                  SizedBox(
+                    height: 4,
+                  ),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 24, vertical: 10),
+                    decoration: BoxDecoration(
+                        border: Border.all(color: primary, width: 2),
+                        borderRadius: BorderRadius.circular(32)),
+                    child: Expanded(
+                        child: TextFormField(
+                      decoration: InputDecoration.collapsed(
+                        hintText: "${snapshot.data!['no phone']}",
                       ),
-                    )
-                  ],
+                    )),
+                  )
+                ],
+              ),
+              SizedBox(
+                height: 12,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Password',
+                    style: paragraph1.copyWith(color: background2),
+                  ),
+                  SizedBox(
+                    height: 4,
+                  ),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 24, vertical: 10),
+                    decoration: BoxDecoration(
+                        border: Border.all(color: primary, width: 2),
+                        borderRadius: BorderRadius.circular(32)),
+                    child: Row(
+                      children: [
+                        Expanded(
+                            child: TextFormField(
+                          obscureText: _isObscured,
+                          decoration:
+                              InputDecoration.collapsed(hintText: 'Password'),
+                        )),
+                        InkWell(
+                          onTap: () {
+                            setState(() {
+                              _isObscured = !_isObscured;
+                            });
+                          },
+                          child: Icon(
+                            _isObscured
+                                ? Icons.visibility_outlined
+                                : Icons.visibility_off_outlined,
+                            color: primary,
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
+              SizedBox(
+                height: 24,
+              ),
+              InkWell(
+                onTap: () async {},
+                child: Container(
+                  width: 120,
+                  padding: EdgeInsets.symmetric(horizontal: 24, vertical: 10),
+                  decoration: BoxDecoration(
+                      color: primary, borderRadius: BorderRadius.circular(32)),
+                  child: Center(
+                      child: Text(
+                    'Save',
+                    style: paragraph1.copyWith(color: text2),
+                  )),
                 ),
-              )
+              ),
             ],
-          ),
-          SizedBox(
-            height: 24,
-          ),
-          InkWell(
-            onTap: (() => null),
-            child: Container(
-              width: 120,
-              padding: EdgeInsets.symmetric(horizontal: 24, vertical: 10),
-              decoration: BoxDecoration(
-                  color: primary, borderRadius: BorderRadius.circular(32)),
-              child: Center(
-                  child: Text(
-                'Save',
-                style: paragraph1.copyWith(color: text2),
-              )),
-            ),
-          ),
-        ],
+          );
+        },
       );
     }
 
@@ -261,4 +322,8 @@ class accountSettings extends StatelessWidget {
       ),
     );
   }
+}
+
+Future<XFile?> getImage() async {
+  return await ImagePicker().pickImage(source: ImageSource.gallery);
 }

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_buildwithdaffa/components/bodyProfile.dart';
@@ -9,6 +10,9 @@ class profilPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    FirebaseFirestore firestoreInst = FirebaseFirestore.instance;
+    CollectionReference user = firestoreInst.collection('user');
+    final auth = FirebaseAuth.instance.currentUser!.email;
     Widget top() {
       return Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -44,9 +48,20 @@ class profilPage extends StatelessWidget {
             onTap: () => Navigator.pushNamed(context, '/accountSettings'),
             child: Column(
               children: [
-                Text(
-                  'Aditya Kusmara',
-                  style: heading3.copyWith(color: text1),
+                StreamBuilder<DocumentSnapshot>(
+                  stream: user.doc(auth).snapshots(),
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) {
+                      return Text('Loading...');
+                    }
+                    if (snapshot.hasError) {
+                      return Text('Something went wrong');
+                    }
+                    return Text(
+                      "${snapshot.data!['full name']}",
+                      style: heading3.copyWith(color: text1),
+                    );
+                  },
                 ),
                 SizedBox(
                   height: 4,
