@@ -49,6 +49,7 @@ class HomePage extends StatelessWidget {
                         return Text(
                           "Hallo, ${snapshot.data!['full name']}",
                           style: paragraph1.copyWith(color: primary),
+                          overflow: TextOverflow.ellipsis,
                         );
                       },
                     )
