@@ -1,3 +1,4 @@
+import 'dart:ffi';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -17,12 +18,12 @@ class accountSettings extends StatefulWidget {
 
 class _accountSettingsState extends State<accountSettings> {
   var profilPicture;
-  bool _isObscured = false;
+  bool _isObscured = true;
   @override
   Widget build(BuildContext context) {
     FirebaseFirestore firestoreInst = FirebaseFirestore.instance;
     CollectionReference user = firestoreInst.collection('user');
-    final auth = FirebaseAuth.instance.currentUser!.email;
+    final auth = FirebaseAuth.instance.currentUser!.uid;
     Widget top() {
       return Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -112,7 +113,7 @@ class _accountSettingsState extends State<accountSettings> {
         stream: user.doc(auth).snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
-            return Text('Loading...');
+            return const Text('Loading...');
           }
           if (snapshot.hasError) {
             return Text('Something went wrong');
@@ -135,10 +136,13 @@ class _accountSettingsState extends State<accountSettings> {
                         border: Border.all(color: primary, width: 2),
                         borderRadius: BorderRadius.circular(32)),
                     child: Expanded(
-                        child: TextFormField(
-                      decoration: InputDecoration.collapsed(
-                          hintText: "${snapshot.data!['full name']}"),
-                    )),
+                      child: TextFormField(
+                        controller: TextEditingController(
+                            text: snapshot.data!['full name']),
+                        decoration: InputDecoration.collapsed(
+                            hintText: "${snapshot.data!['full name']}"),
+                      ),
+                    ),
                   )
                 ],
               ),
@@ -162,6 +166,8 @@ class _accountSettingsState extends State<accountSettings> {
                         borderRadius: BorderRadius.circular(32)),
                     child: Expanded(
                         child: TextFormField(
+                      controller: TextEditingController(
+                          text: snapshot.data!['username']),
                       decoration: InputDecoration.collapsed(
                           hintText: "${snapshot.data!['username']}"),
                     )),
@@ -188,6 +194,8 @@ class _accountSettingsState extends State<accountSettings> {
                         borderRadius: BorderRadius.circular(32)),
                     child: Expanded(
                         child: TextFormField(
+                      controller:
+                          TextEditingController(text: snapshot.data!['email']),
                       decoration: InputDecoration.collapsed(
                           hintText: "${snapshot.data!['email']}"),
                     )),
@@ -214,6 +222,8 @@ class _accountSettingsState extends State<accountSettings> {
                         borderRadius: BorderRadius.circular(32)),
                     child: Expanded(
                         child: TextFormField(
+                      controller: TextEditingController(
+                          text: snapshot.data!['no phone'].toString()),
                       decoration: InputDecoration.collapsed(
                         hintText: "${snapshot.data!['no phone']}",
                       ),
@@ -243,6 +253,8 @@ class _accountSettingsState extends State<accountSettings> {
                       children: [
                         Expanded(
                             child: TextFormField(
+                          controller: TextEditingController(
+                              text: snapshot.data!['password']),
                           obscureText: _isObscured,
                           decoration:
                               InputDecoration.collapsed(hintText: 'Password'),

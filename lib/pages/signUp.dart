@@ -41,7 +41,7 @@ class _SignUpPageState extends State<SignUpPage> {
               email: emailController.text, password: password.text)
           .then((value) => FirebaseFirestore.instance
                   .collection('user')
-                  .doc(value.user?.email)
+                  .doc(value.user?.uid)
                   .set({
                 'email': value.user?.email,
                 'full name': fullName.text,

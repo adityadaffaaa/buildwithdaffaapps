@@ -12,7 +12,7 @@ class profilPage extends StatelessWidget {
   Widget build(BuildContext context) {
     FirebaseFirestore firestoreInst = FirebaseFirestore.instance;
     CollectionReference user = firestoreInst.collection('user');
-    final auth = FirebaseAuth.instance.currentUser!.email;
+    final auth = FirebaseAuth.instance.currentUser!.uid;
     Widget top() {
       return Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
